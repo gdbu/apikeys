@@ -12,8 +12,8 @@ github.com/Hatch1fy/logger v0.4.76 h1:wy54RGEtXg/pAnXWEF9bwttMl+FldNKyAUns3fM5Tk
 github.com/Hatch1fy/logger v0.4.76/go.mod h1:O2+MXYz9Qr5eXePwFEzAtuuHFYs/M9Vbps5cVsNZg98=
 github.com/Hatch1fy/pgutils v0.4.75 h1:QRq0iHIykcqtKiwZrQ5igDp25F6rRmHQIUYBexsSErA=
 github.com/Hatch1fy/pgutils v0.4.75/go.mod h1:MgaXrebmau3EJGKKYksROEp0ApC6dCpEIQhQN7iCF2g=
-github.com/Hatch1fy/service-core v0.4.76 h1:aDtlXWZqJCpaV9QT6Ok9QJYQW9Ge30+KGDuGKyCBaoE=
-github.com/Hatch1fy/service-core v0.4.76/go.mod h1:VnTlnOrr8swzzNmL7gV/vHMXG4uFF7Z4P5LjECrd+4w=
+github.com/Hatch1fy/service-core v0.4.77 h1:2RJ2X8IvP2cYnRv79hgpE4cqnk7+/HBMKteACgLtffs=
+github.com/Hatch1fy/service-core v0.4.77/go.mod h1:VnTlnOrr8swzzNmL7gV/vHMXG4uFF7Z4P5LjECrd+4w=
 github.com/Hatch1fy/snapshotter v0.4.76 h1:cm+sRxKKsn20AM7bfaFsKRS4t3rHL8NHmFP8TjF0UHI=
 github.com/Hatch1fy/snapshotter v0.4.76/go.mod h1:4IxTI9HDkEAfaJh+sZtI3S7bvSvFQU1yVZ8yz8eaNt0=
 github.com/Hatch1fy/uuid v0.4.75 h1:L7w8cVOwQnheHg31z6XlsxtMRSKaHUonreaTbPtS2Bo=
