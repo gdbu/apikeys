@@ -5,7 +5,7 @@ import (
 	"github.com/Hatch1fy/uuid"
 	"github.com/boltdb/bolt"
 
-	core "github.com/Hatch1fy/service-core"
+	core "github.com/gdbu/dbl"
 )
 
 const (
