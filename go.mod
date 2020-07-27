@@ -1,4 +1,4 @@
-module github.com/Hatch1fy/apikeys
+module github.com/gdbu/apikeys
 
 go 1.14
 
