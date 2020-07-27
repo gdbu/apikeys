@@ -2,8 +2,8 @@ package apikeys
 
 import (
 	"github.com/Hatch1fy/errors"
-	"github.com/Hatch1fy/uuid"
 	"github.com/boltdb/bolt"
+	"github.com/gdbu/uuid"
 
 	core "github.com/gdbu/dbl"
 )
