@@ -1,7 +1,7 @@
 package apikeys
 
 import (
-	"github.com/Hatch1fy/errors"
+	"github.com/hatchify/errors"
 )
 
 func newAPIKey(userID, name, key string) (a APIKey) {
