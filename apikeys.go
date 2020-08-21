@@ -1,7 +1,8 @@
 package apikeys
 
 import (
-	common "github.com/Hatch1fy/hatch-common"
+	"context"
+
 	"github.com/boltdb/bolt"
 	"github.com/gdbu/uuid"
 	"github.com/hatchify/errors"
@@ -101,9 +102,7 @@ func (a *APIKeys) GetByUser(userID string) (apiKeys []*APIKey, err error) {
 }
 
 // UpdateName will edit an APIKey's name
-func (a *APIKeys) UpdateName(apiKey, name string) (err error) {
-	// Use the default touch contexts (timeout of 12 seconds)
-	ctx := common.DefaultTouchContext()
+func (a *APIKeys) UpdateName(ctx context.Context, apiKey, name string) (err error) {
 	err = a.c.Transaction(ctx, func(txn *core.Transaction) (err error) {
 		return a.updateName(txn, apiKey, name)
 	})
