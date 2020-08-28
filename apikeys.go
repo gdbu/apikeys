@@ -2,10 +2,9 @@ package apikeys
 
 import (
 	"github.com/boltdb/bolt"
+	"github.com/gdbu/dbl"
 	"github.com/gdbu/uuid"
 	"github.com/hatchify/errors"
-
-	core "github.com/gdbu/dbl"
 )
 
 const (
@@ -31,7 +30,7 @@ var (
 // New will return a new instance of APIKeys
 func New(dir string) (ap *APIKeys, err error) {
 	var a APIKeys
-	if a.c, err = core.New("apikeys", dir, &APIKey{}, relationships...); err != nil {
+	if a.c, err = dbl.New("apikeys", dir, &APIKey{}, relationships...); err != nil {
 		return
 	}
 
@@ -45,13 +44,13 @@ func New(dir string) (ap *APIKeys, err error) {
 
 // APIKeys manages the apiKeys service
 type APIKeys struct {
-	c *core.Core
+	c *dbl.Core
 
 	db  *bolt.DB
 	gen *uuid.Generator
 }
 
-func (a *APIKeys) updateName(txn *core.Transaction, apiKey, name string) (err error) {
+func (a *APIKeys) updateName(txn *dbl.Transaction, apiKey, name string) (err error) {
 	var key APIKey
 	if err = txn.Get(apiKey, &key); err != nil {
 		return
@@ -101,7 +100,7 @@ func (a *APIKeys) GetByUser(userID string) (apiKeys []*APIKey, err error) {
 
 // UpdateName will edit an APIKey's name
 func (a *APIKeys) UpdateName(apiKey, name string) (err error) {
-	err = a.c.Transaction(func(txn *core.Transaction) (err error) {
+	err = a.c.Transaction(func(txn *dbl.Transaction) (err error) {
 		return a.updateName(txn, apiKey, name)
 	})
 
