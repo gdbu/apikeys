@@ -1,6 +1,8 @@
 package apikeys
 
 import (
+	"context"
+
 	"github.com/boltdb/bolt"
 	"github.com/gdbu/dbl"
 	"github.com/gdbu/uuid"
@@ -100,7 +102,7 @@ func (a *APIKeys) GetByUser(userID string) (apiKeys []*APIKey, err error) {
 
 // UpdateName will edit an APIKey's name
 func (a *APIKeys) UpdateName(apiKey, name string) (err error) {
-	err = a.c.Transaction(func(txn *dbl.Transaction) (err error) {
+	err = a.c.Transaction(context.Background(), func(txn *dbl.Transaction) (err error) {
 		return a.updateName(txn, apiKey, name)
 	})
 
