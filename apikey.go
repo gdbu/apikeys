@@ -1,6 +1,7 @@
 package apikeys
 
 import (
+	"github.com/gdbu/dbl"
 	"github.com/hatchify/errors"
 )
 
@@ -13,15 +14,14 @@ func newAPIKey(userID, name, key string) (a APIKey) {
 
 // APIKey represents an api key reference
 type APIKey struct {
-	ID     string `json:"id"`
+	dbl.Entry
+
 	UserID string `json:"userID"`
 
 	Name string `json:"name"`
 	Key  string `json:"key"`
 
-	LastUsedAt int64 `json:"lastUsedAt"`
-	CreatedAt  int64 `json:"createdAt"`
-	UpdatedAt  int64 `json:"updatedAt"`
+	UpdatedAt int64 `json:"updatedAt"`
 }
 
 // Validate will validate an API key
@@ -49,10 +49,10 @@ func (a *APIKey) GetCreatedAt() (createdAt int64) { return a.CreatedAt }
 // GetUpdatedAt will get the updated at timestamp
 func (a *APIKey) GetUpdatedAt() (updatedAt int64) { return a.UpdatedAt }
 
-// GetRelationshipIDs will get the associated relationship IDs
-func (a *APIKey) GetRelationshipIDs() (ids []string) {
-	ids = append(ids, a.Key)
-	ids = append(ids, a.UserID)
+// GetRelationships will get the associated relationship IDs
+func (a *APIKey) GetRelationships() (r dbl.Relationships) {
+	r.Append(a.Key)
+	r.Append(a.UserID)
 	return
 }
 
