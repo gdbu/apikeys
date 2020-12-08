@@ -1,8 +1,8 @@
 package apikeys
 
 import (
-	"github.com/gdbu/dbl"
 	"github.com/hatchify/errors"
+	"github.com/mojura/mojura"
 )
 
 func newAPIKey(userID, name, key string) (a APIKey) {
@@ -14,7 +14,7 @@ func newAPIKey(userID, name, key string) (a APIKey) {
 
 // APIKey represents an api key reference
 type APIKey struct {
-	dbl.Entry
+	mojura.Entry
 
 	UserID string `json:"userID"`
 
@@ -38,29 +38,9 @@ func (a *APIKey) Validate() (err error) {
 	return errs.Err()
 }
 
-// core.Value interface methods below
-
-// GetID will get the message ID
-func (a *APIKey) GetID() (id string) { return a.ID }
-
-// GetCreatedAt will get the created at timestamp
-func (a *APIKey) GetCreatedAt() (createdAt int64) { return a.CreatedAt }
-
-// GetUpdatedAt will get the updated at timestamp
-func (a *APIKey) GetUpdatedAt() (updatedAt int64) { return a.UpdatedAt }
-
 // GetRelationships will get the associated relationship IDs
-func (a *APIKey) GetRelationships() (r dbl.Relationships) {
+func (a *APIKey) GetRelationships() (r mojura.Relationships) {
 	r.Append(a.Key)
 	r.Append(a.UserID)
 	return
 }
-
-// SetID will get the message ID
-func (a *APIKey) SetID(id string) { a.ID = id }
-
-// SetCreatedAt will get the created at timestamp
-func (a *APIKey) SetCreatedAt(createdAt int64) { a.CreatedAt = createdAt }
-
-// SetUpdatedAt will get the updated at timestamp
-func (a *APIKey) SetUpdatedAt(updatedAt int64) { a.UpdatedAt = updatedAt }

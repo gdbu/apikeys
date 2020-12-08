@@ -3,10 +3,9 @@ package apikeys
 import (
 	"context"
 
-	"github.com/boltdb/bolt"
-	"github.com/gdbu/dbl"
 	"github.com/gdbu/uuid"
 	"github.com/hatchify/errors"
+	"github.com/mojura/mojura"
 )
 
 const (
@@ -32,7 +31,7 @@ var (
 // New will return a new instance of APIKeys
 func New(dir string) (ap *APIKeys, err error) {
 	var a APIKeys
-	if a.c, err = dbl.New("apikeys", dir, &APIKey{}, relationships...); err != nil {
+	if a.m, err = mojura.New("apikeys", dir, &APIKey{}, relationships...); err != nil {
 		return
 	}
 
@@ -46,13 +45,12 @@ func New(dir string) (ap *APIKeys, err error) {
 
 // APIKeys manages the apiKeys service
 type APIKeys struct {
-	c *dbl.Core
+	m *mojura.Mojura
 
-	db  *bolt.DB
 	gen *uuid.Generator
 }
 
-func (a *APIKeys) updateName(txn *dbl.Transaction, apiKey, name string) (err error) {
+func (a *APIKeys) updateName(txn *mojura.Transaction, apiKey, name string) (err error) {
 	var key APIKey
 	if err = txn.Get(apiKey, &key); err != nil {
 		return
@@ -70,7 +68,7 @@ func (a *APIKeys) New(userID, name string) (key string, err error) {
 		return
 	}
 
-	if _, err = a.c.New(&apiKey); err != nil {
+	if _, err = a.m.New(&apiKey); err != nil {
 		return
 	}
 
@@ -81,7 +79,7 @@ func (a *APIKeys) New(userID, name string) (key string, err error) {
 // Get will return the APIKey associated with the provided apiKey
 func (a *APIKeys) Get(key string) (apiKey *APIKey, err error) {
 	var as []*APIKey
-	if err = a.c.GetByRelationship(relationshipKeys, key, &as); err != nil {
+	if err = a.m.GetByRelationship(relationshipKeys, key, &as); err != nil {
 		return
 	}
 
@@ -96,13 +94,13 @@ func (a *APIKeys) Get(key string) (apiKey *APIKey, err error) {
 
 // GetByUser will return the APIKeys associated with the provided user id
 func (a *APIKeys) GetByUser(userID string) (apiKeys []*APIKey, err error) {
-	err = a.c.GetByRelationship(relationshipUsers, userID, &apiKeys)
+	err = a.m.GetByRelationship(relationshipUsers, userID, &apiKeys)
 	return
 }
 
 // UpdateName will edit an APIKey's name
 func (a *APIKeys) UpdateName(apiKey, name string) (err error) {
-	err = a.c.Transaction(context.Background(), func(txn *dbl.Transaction) (err error) {
+	err = a.m.Transaction(context.Background(), func(txn *mojura.Transaction) (err error) {
 		return a.updateName(txn, apiKey, name)
 	})
 
@@ -111,10 +109,10 @@ func (a *APIKeys) UpdateName(apiKey, name string) (err error) {
 
 // Remove will delete an apiKey
 func (a *APIKeys) Remove(apiKey string) (err error) {
-	return a.c.Remove(apiKey)
+	return a.m.Remove(apiKey)
 }
 
 // Close will close the apiKeys service
 func (a *APIKeys) Close() (err error) {
-	return a.c.Close()
+	return a.m.Close()
 }
